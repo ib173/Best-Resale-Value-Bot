@@ -5,11 +5,16 @@ TODO:
 
     -create config
     
-    -get size
+    -make size param
+    
+    -
     
     -make place bid function
     
     -make highest bid functiono
     
+    -REST API implementation? whereas you can add to a running list something like "Palace Hoodie, <$40" and be notified when one is found
+    
     -find more efficent way to cross check stockx prices without selenium yet still evading bot detection
       --> mechanize in js?
+      --> beautiful soup with implemented wait times? 

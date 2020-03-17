@@ -7,7 +7,6 @@ TODO:
     
     -make size param
     
-    -
     
     -make place bid function
     

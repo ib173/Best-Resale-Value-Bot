@@ -80,7 +80,7 @@ def run_queries(links):
     item_list = []
     keep = 0
     for link in links:
-        request = urllib.request.Request(link, None, {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'})
+        request = urllib.request.Request(link, None, {'User-Agent':'*****************'})
         urlfile = urllib.request.urlopen(request)
         page = urlfile.read()
         soup = BeautifulSoup(page, 'html.parser')
@@ -105,7 +105,7 @@ def run_queries(links):
         # print('BRAND::::', brand)
         for link in brand[:5]: # changed index
             # print(link)
-            request = urllib.request.Request(link, None, {'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'})
+            request = urllib.request.Request(link, None, {'User-Agent':'**********************'})
             urlfile = urllib.request.urlopen(request)
             page = urlfile.read()
             soup = BeautifulSoup(page, 'html.parser')

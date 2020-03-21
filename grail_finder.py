@@ -144,7 +144,7 @@ def get_average_price_grailed(urls):
         return price_sum/count
     return 0
 
-
+""" append prices to respective items in item(class) """
 def append_prices_to_items(prices, items):
     index = 0
     items = items[:len(prices)]
@@ -152,7 +152,6 @@ def append_prices_to_items(prices, items):
         current.resale_price = prices[index]
         index += 1
         current.differential = current.resale_price - current.listing_price
-
 
 
 

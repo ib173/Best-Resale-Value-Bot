@@ -1,5 +1,6 @@
-# Fashion-Finder
-### a bot which, given a list of any specific brands or clothing items, searches every possible eBay listing associated while cross checking prices from Stockx and Grailed to find the best value item.
+# Resale Value Finder
+### --> a bot which, given a list of any specific brands or clothing items, searches every possible eBay listing associated while cross checking prices from Stockx and Grailed to find the best value item. 
+### --> Value is largely determined by possible resale value determined by past sales and current listings of the same or similar items. 
 
 ###### TODO:
 

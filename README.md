@@ -3,14 +3,12 @@
 ### --> Value is largely determined by possible resale value determined by past sales and current listings of the same or similar items. 
 
 ###### TODO:
-
-    -create config
     
     -make size param
     
     -make place bid function
     
-    -make highest bid functiono
+    -make highest bid function, setting max bid
     
     -REST API implementation? whereas you can add to a running list something like "Palace Hoodie, <$40" and be notified when one is found
     

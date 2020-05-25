@@ -20,13 +20,16 @@ def return_best_resale_options():
     print(items)
     # for item in items:
     #     item.print_vals()
-    grailed_links = get_grailed_queries(items)
-    print(grailed_links)
-    price_list = collect_grailed_prices(grailed_links)
-    # print(price_list)
-    append_prices_to_items(price_list, items)
-    for item in items:
-        item.print_vals()
+    # grailed_links = get_grailed_queries(items)
+    stockx_links = get_stockx_queries(items)
+    # print(grailed_links)
+    print(stockx_links)
+    # price_list = collect_grailed_prices(grailed_links)
+    price_list = get_price_stockx(stockx_links)
+    print(price_list)
+    # append_prices_to_items(price_list, items)
+    # for item in items:
+    #     item.print_vals()
 
 """ given list[] of grailed url's of type(str), return list[] of average
 prices """
@@ -118,6 +121,19 @@ def get_grailed_queries(list_items):
             grailed_queries.append(temp_q)
     return grailed_queries
 
+""" evade bot detection by using google site search with query (<item title>
+site:stockx.com), return average price """
+def get_stockx_queries(list_items):
+    # print(list_items)
+    domain = 'stockx.com'
+    stockx_queries = []
+    for current in list_items:
+        if current is not None:
+            temp_title = current.title
+            temp_q = temp_title + ' site:' + domain
+            stockx_queries.append(temp_q)
+    return stockx_queries
+
 """ return search list[] of urls of type(string) given query string """
 def search_google(query):
     num_results = config.NUM_RESULTS
@@ -143,6 +159,18 @@ def get_average_price_grailed(urls):
     if count != 0:
         return price_sum/count
     return 0
+
+def get_price_stockx(urls):
+    price = 0
+
+    page = requests.get(urls[0])
+    soup = BeautifulSoup(page.text, 'html.parser')
+    try:
+        price = soup.find(class_='en-us stat-value stat-small').get_text()
+        price = float(re.sub("[^0-9]", "", price))
+    except:
+        pass
+    return price
 
 """ append prices to respective items in item(class) """
 def append_prices_to_items(prices, items):

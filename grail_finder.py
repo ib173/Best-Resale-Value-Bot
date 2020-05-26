@@ -15,33 +15,21 @@ from config import item
 
 def return_best_resale_options():
     queries = create_search_queries(config.BRANDS_TO_CHECK)
-    print(queries)
+    print("QUERIES \n", queries)
     items = run_queries(queries)
-    print(items)
+    print("ITEMS \n", items)
     # for item in items:
     #     item.print_vals()
     # grailed_links = get_grailed_queries(items)
-    stockx_links = get_stockx_queries(items)
+    stockx_queries = get_stockx_queries(items)
     # print(grailed_links)
-    print(stockx_links)
+    print("STOCKX QUERIES \n", stockx_queries)
     # price_list = collect_grailed_prices(grailed_links)
-    price_list = get_price_stockx(stockx_links)
+    price_list = collect_stockx_prices(stockx_queries)
     print(price_list)
     # append_prices_to_items(price_list, items)
     # for item in items:
     #     item.print_vals()
-
-""" given list[] of grailed url's of type(str), return list[] of average
-prices """
-def collect_grailed_prices(grailed_queries):
-    av_prices = []
-    for search in grailed_queries:
-        # print(search)
-        urls = search_google(search)
-        # print(urls[:5])
-        average = get_average_price_grailed(urls)
-        av_prices.append(average)
-    return av_prices
 
 """ given a list of brands of type (str), return [] of concatonated query
 strings """
@@ -70,23 +58,6 @@ def run_queries(brand_links):
         index += 1
     return items
 
-""" complile initial ebay information into an item(class) """
-def ebay_info_to_item(link, brand):
-    request = urllib.request.Request(link, None, config.USER_AGENT)
-    urlfile = urllib.request.urlopen(request)
-    page = urlfile.read()
-    soup = BeautifulSoup(page, 'html.parser')
-    title = soup.find('span', {'class' : "u-dspn"}).get_text()
-    for current_type in config.clothing_types:
-        for name in current_type:
-            if name in title.lower():
-                temp_type = name
-            else:
-                temp_type = "N/A"
-    price = soup.find('span', {'class' : "notranslate"}).get_text()
-    price = float(price.replace('US $', ''))
-    return item(brand, title, price, temp_type)
-
 """ given list of urls corresponding to brand-biased ebay searches, collects
 links and instantiate items with them, return the list of items """
 def create_item_list(brand_links):
@@ -107,6 +78,23 @@ def create_item_list(brand_links):
         keep += len(temp_list)
         item_list.append(temp_list)
     return item_list
+
+""" complile initial ebay information into an item(class) """
+def ebay_info_to_item(link, brand):
+    request = urllib.request.Request(link, None, config.USER_AGENT)
+    urlfile = urllib.request.urlopen(request)
+    page = urlfile.read()
+    soup = BeautifulSoup(page, 'html.parser')
+    title = soup.find('span', {'class' : "u-dspn"}).get_text()
+    for current_type in config.clothing_types:
+        for name in current_type:
+            if name in title.lower():
+                temp_type = name
+            else:
+                temp_type = "N/A"
+    price = soup.find('span', {'class' : "notranslate"}).get_text()
+    price = float(price.replace('US $', ''))
+    return item(brand, title, price, temp_type)
 
 """ evade bot detection by using google site search with query (<item title>
 site:grailed.com), return average price """
@@ -133,6 +121,31 @@ def get_stockx_queries(list_items):
             temp_q = temp_title + ' site:' + domain
             stockx_queries.append(temp_q)
     return stockx_queries
+
+
+""" given list[] of grailed url's of type(str), return list[] of average
+prices """
+def collect_grailed_prices(grailed_queries):
+    av_prices = []
+    for search in grailed_queries:
+        # print(search)
+        urls = search_google(search)
+        # print(urls[:5])
+        average = get_average_price_grailed(urls)
+        av_prices.append(average)
+    return av_prices
+
+""" given list[] of stockx url's of type(str), return list[] of average
+prices """
+def collect_stockx_prices(stockx_queries):
+    av_prices = []
+    for search in stockx_queries:
+        print(search)
+        urls = search_google(search)
+        # print(urls[:5])
+        average = get_average_price_grailed(urls)
+        av_prices.append(average)
+    return av_prices
 
 """ return search list[] of urls of type(string) given query string """
 def search_google(query):
